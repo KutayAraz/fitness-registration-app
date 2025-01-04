@@ -2,8 +2,8 @@ import { useState } from "react";
 import styles from "./step-one.module.css";
 import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
 import { StepOneData, StepOneProps } from "./types";
-import { Input } from "@/components/ui/input/input";
 import { useStepForm } from "@/hooks/use-step-form";
+import { InputWithUnit } from "@/components/ui/input-with-unit/input-with-unit";
 
 export const StepOne = ({ onNext, onBack }: StepOneProps) => {
   const [formData, setFormData] = useState<StepOneData>({
@@ -78,31 +78,33 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
       isSubmitting={isSubmitting}
     >
       <div className={styles.inputContainer}>
-        <Input
+        <InputWithUnit
           label="Height"
           type="number"
           id="height"
           name="height"
           value={formData.height || ""}
           onChange={handleInputChange}
-          placeholder="Your height (cm)"
+          placeholder="Your height"
           error={errors.height}
           min={VALIDATION_RULES.height.min}
           max={VALIDATION_RULES.height.max}
+          unit="cm"
           required
         />
 
-        <Input
+        <InputWithUnit
           label="Weight"
           type="number"
           id="weight"
           name="weight"
           value={formData.weight || ""}
           onChange={handleInputChange}
-          placeholder="Your weight (kg)"
+          placeholder="Your weight"
           error={errors.weight}
           min={VALIDATION_RULES.weight.min}
           max={VALIDATION_RULES.weight.max}
+          unit="kg"
           required
         />
       </div>

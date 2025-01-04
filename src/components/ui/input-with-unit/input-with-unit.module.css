@@ -1,0 +1,25 @@
+.inputWithUnitWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.unit {
+    position: absolute;
+    color: #666;
+    font-size: 0.875rem;
+    pointer-events: none;
+    user-select: none;
+}
+
+.unit.right {
+    right: 1rem;
+}
+
+.unit.left {
+    left: 1rem;
+}
+
+.unit.left+.inputWithUnit {
+    padding-left: 3rem;
+    padding-right: 1rem;
+}
