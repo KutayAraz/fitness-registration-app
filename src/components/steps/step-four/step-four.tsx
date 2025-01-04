@@ -71,11 +71,21 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
     });
   };
 
-  const inputFields = [
-    { name: "firstName", placeholder: "Name", type: "text" },
-    { name: "lastName", placeholder: "Surname", type: "text" },
-    { name: "email", placeholder: "E-mail", type: "email" },
-    { name: "password", placeholder: "Password", type: "password" },
+  const inputGroups = [
+    {
+      groupName: "personal",
+      fields: [
+        { name: "firstName", placeholder: "Name", type: "text" },
+        { name: "lastName", placeholder: "Surname", type: "text" },
+      ],
+    },
+    {
+      groupName: "account",
+      fields: [
+        { name: "email", placeholder: "E-mail", type: "email" },
+        { name: "password", placeholder: "Password", type: "password" },
+      ],
+    },
   ] as const;
 
   return (
@@ -88,17 +98,21 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
       isLastStep
     >
       <div className={styles.formContainer}>
-        {inputFields.map((field) => (
-          <Input
-            key={field.name}
-            name={field.name}
-            type={field.type}
-            placeholder={field.placeholder}
-            value={formData[field.name as keyof StepFourData] as string}
-            onChange={handleChange}
-            error={errors[field.name as keyof StepFourData]}
-            required
-          />
+        {inputGroups.map((group) => (
+          <div key={group.groupName} className={styles.inputGroup}>
+            {group.fields.map((field) => (
+              <Input
+                key={field.name}
+                name={field.name}
+                type={field.type}
+                placeholder={field.placeholder}
+                value={formData[field.name as keyof StepFourData] as string}
+                onChange={handleChange}
+                error={errors[field.name as keyof StepFourData]}
+                required
+              />
+            ))}
+          </div>
         ))}
       </div>
     </StepWrapper>
