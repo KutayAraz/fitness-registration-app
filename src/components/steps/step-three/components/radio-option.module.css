@@ -1,0 +1,81 @@
+.radioOption {
+    width: 100%;
+    cursor: pointer;
+}
+
+.radioContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #E0E0E0;
+    margin: 0 1rem;
+    transition: all 0.2s ease;
+}
+
+.radioContent:last-child {
+    border-bottom: none;
+}
+
+.iconLabel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    color: #4140E5;
+}
+
+.label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.hiddenRadio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.customRadio {
+    display: flex;
+    align-items: center;
+}
+
+.radioOuter {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4140E5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.radioInner {
+    width: 0;
+    height: 0;
+    background-color: #4140E5;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.selected .radioOuter {
+    border-color: #4140E5;
+}
+
+.selected .radioInner {
+    width: 12px;
+    height: 12px;
+}
+
+/* Optional hover effect */
+.radioContent:hover .radioOuter {
+    border-color: #4140E5;
+    box-shadow: 0 0 0 1px rgba(65, 64, 229, 0.1);
+}

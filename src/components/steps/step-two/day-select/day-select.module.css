@@ -1,0 +1,48 @@
+.daySelect {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: left;
+    position: relative;
+}
+
+.daySelect::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    height: 1px;
+    background-color: #1717be;
+    opacity: 0.5;
+}
+
+/* Remove the bottom border for the last item */
+.daySelect:last-child::after {
+    display: none;
+}
+
+.dayText {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 400;
+}
+
+.disabled {
+    cursor: not-allowed;
+    background-color: #F5F5F5;
+}
+
+.disabledText {
+    color: #999;
+}
+
+.checkmark {
+    color: #4140E5;
+}
