@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { NavigationButton } from "../ui/navigation-button/navigation-button";
 import { FormTitle } from "../ui/form-title/form-title";
 import styles from "./step-wrapper.module.css";
+import { useTranslation } from "react-i18next";
 
 interface StepWrapperProps {
   title: string;
@@ -24,22 +25,24 @@ export const StepWrapper = ({
   isValid,
   isSubmitting = false,
 }: StepWrapperProps) => {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={onNext} className={styles.stepContainer}>
-      <FormTitle title={title} />
+      <FormTitle title={t(title)} />
       <div className={styles.stepContent}>{children}</div>
       <div className={styles.navigationContainer}>
         <NavigationButton
-          text="Back"
+          text={t("buttons.back")}
           type="button"
-          ariaLabel="Back Button"
+          ariaLabel={t("buttons.back")}
           onClick={onBack}
           disabled={isFirstStep || isSubmitting}
         />
         <NavigationButton
-          text={isSubmitting ? "Saving..." : "Next"}
+          text={isSubmitting ? t("buttons.save") : t("buttons.next")}
           type="submit"
-          ariaLabel="Next Button"
+          ariaLabel={isSubmitting ? t("buttons.save") : t("buttons.next")}
           disabled={!isValid || isLastStep || isSubmitting}
         />
       </div>

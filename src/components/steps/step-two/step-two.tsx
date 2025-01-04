@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
-import { StepTwoData, StepTwoProps } from "./types";
+import { DayKey, StepTwoData, StepTwoProps } from "./types";
 import { DaySelect } from "./day-select/day-select";
 import styles from "./step-two.module.css";
 import { useStepForm } from "@/hooks/use-step-form";
+import { useTranslation } from "react-i18next";
 
 export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState<StepTwoData>({
     selectedDays: [],
   });
@@ -15,17 +18,17 @@ export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
     validateData: (data) => data.selectedDays.length > 0,
   });
 
-  const allDays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ] as const;
+  const allDays: DayKey[] = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+  ];
 
-  const handleDayToggle = (day: string) => {
+  const handleDayToggle = (day: DayKey) => {
     setFormData((prev) => ({
       selectedDays: prev.selectedDays.includes(day)
         ? prev.selectedDays.filter((d) => d !== day)
@@ -39,7 +42,7 @@ export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
   };
   return (
     <StepWrapper
-      title="Pick your workout days"
+      title="step2.title"
       onNext={handleFormSubmit}
       onBack={onBack}
       isValid={formData.selectedDays.length > 0}
@@ -49,7 +52,7 @@ export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
         {allDays.map((day) => (
           <DaySelect
             key={day}
-            day={day}
+            day={t(`step2.days.${day}`)}
             selected={formData.selectedDays.includes(day)}
             onClick={() => handleDayToggle(day)}
             disabled={!availableDays.includes(day)}

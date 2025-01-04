@@ -5,8 +5,10 @@ import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
 import { Input } from "@/components/ui/input/input";
 import { VALIDATION_RULES } from "./validation-rules";
 import { useStepForm } from "@/hooks/use-step-form";
+import { useTranslation } from "react-i18next";
 
 export const StepFour = ({ onNext, onBack }: StepFourProps) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<StepFourData>({
     firstName: "",
     lastName: "",
@@ -24,7 +26,7 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
     (Object.keys(data) as Array<keyof StepFourData>).forEach((field) => {
       const rule = VALIDATION_RULES[field];
       if (!rule.validate(data[field] as string)) {
-        newErrors[field] = rule.errorMessage;
+        newErrors[field] = rule.errorKey;
         isValid = false;
       }
     });
@@ -40,7 +42,7 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
 
   const validateField = (name: keyof StepFourData, value: string): string => {
     const rule = VALIDATION_RULES[name];
-    return !rule.validate(value) ? rule.errorMessage : "";
+    return !rule.validate(value) ? rule.errorKey : "";
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,26 +73,43 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
     });
   };
 
+  // Define input groups with translation keys
   const inputGroups = [
     {
       groupName: "personal",
       fields: [
-        { name: "firstName", placeholder: "Name", type: "text" },
-        { name: "lastName", placeholder: "Surname", type: "text" },
+        {
+          name: "firstName" as const,
+          translationKey: "step4.name",
+          type: "text",
+        },
+        {
+          name: "lastName" as const,
+          translationKey: "step4.surname",
+          type: "text",
+        },
       ],
     },
     {
       groupName: "account",
       fields: [
-        { name: "email", placeholder: "E-mail", type: "email" },
-        { name: "password", placeholder: "Password", type: "password" },
+        {
+          name: "email" as const,
+          translationKey: "step4.email",
+          type: "email",
+        },
+        {
+          name: "password" as const,
+          translationKey: "step4.password",
+          type: "password",
+        },
       ],
     },
   ] as const;
 
   return (
     <StepWrapper
-      title="Final step. Complete your registration"
+      title="step4.title"
       onNext={handleFormSubmit}
       onBack={onBack}
       isValid={isValid()}
@@ -105,10 +124,10 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
                 key={field.name}
                 name={field.name}
                 type={field.type}
-                placeholder={field.placeholder}
-                value={formData[field.name as keyof StepFourData] as string}
+                label={t(`${field.translationKey}.label`)}
+                placeholder={t(`${field.translationKey}.placeholder`)}
                 onChange={handleChange}
-                error={errors[field.name as keyof StepFourData]}
+                error={t(errors[field.name as keyof StepFourData] || "")}
                 required
               />
             ))}

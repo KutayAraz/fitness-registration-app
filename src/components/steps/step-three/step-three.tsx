@@ -7,8 +7,10 @@ import FireIcon from "@/assets/svgs/fire.svg?react";
 import RankIcon from "@/assets/svgs/rank.svg?react";
 import SmileyFaceIcon from "@/assets/svgs/smiley-face.svg?react";
 import { useStepForm } from "@/hooks/use-step-form";
+import { useTranslation } from "react-i18next";
 
 export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<StepThreeData>({
     fitnessGoal: null as unknown as FitnessGoal,
   });
@@ -21,17 +23,17 @@ export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
   const fitnessGoals = [
     {
       value: "loseWeight" as const,
-      label: "Lose weight",
+      translationKey: "step3.goals.loseWeight",
       icon: <FireIcon width={16} height={16} />,
     },
     {
       value: "buildMuscle" as const,
-      label: "Build muscle",
+      translationKey: "step3.goals.buildMuscle",
       icon: <RankIcon width={16} height={16} />,
     },
     {
       value: "stayHealthy" as const,
-      label: "Stay healthy",
+      translationKey: "step3.goals.stayHealthy",
       icon: <SmileyFaceIcon width={16} height={16} />,
     },
   ];
@@ -47,18 +49,18 @@ export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
 
   return (
     <StepWrapper
-      title="What is your fitness goal?"
+      title="step3.title"
       onNext={handleFormSubmit}
       onBack={onBack}
-      isValid={!!formData.fitnessGoal}
+      isValid={formData.fitnessGoal !== null}
       isSubmitting={isSubmitting}
     >
-      <div className={styles.goalsContainer}>
+      <div className={styles.goalsContainer} role="radiogroup" aria-label={t("step3.ariaLabel")}>
         {fitnessGoals.map((goal) => (
           <RadioOption
             key={goal.value}
             value={goal.value}
-            label={goal.label}
+            label={t(goal.translationKey)}
             icon={goal.icon}
             selected={formData.fitnessGoal === goal.value}
             onChange={handleGoalChange}

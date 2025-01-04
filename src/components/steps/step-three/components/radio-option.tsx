@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import styles from "./radio-option.module.css";
 
 interface RadioOptionProps<T extends string> {
@@ -17,6 +18,9 @@ export const RadioOption = <T extends string>({
   onChange,
   name,
 }: RadioOptionProps<T>) => {
+  const { i18n } = useTranslation();
+  const isRTL = i18n.dir() === "rtl";
+
   return (
     <label className={styles.radioOption}>
       <input
@@ -27,7 +31,11 @@ export const RadioOption = <T extends string>({
         name={name}
         className={styles.hiddenRadio}
       />
-      <div className={`${styles.radioContent} ${selected ? styles.selected : ""}`}>
+      <div
+        className={`${styles.radioContent} ${selected ? styles.selected : ""} ${
+          isRTL ? styles.rtl : ""
+        }`}
+      >
         <div className={styles.iconLabel}>
           <span className={styles.icon}>{icon}</span>
           <span className={styles.label}>{label}</span>

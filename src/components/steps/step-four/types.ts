@@ -14,7 +14,7 @@ export interface StepFourProps {
 
 export interface ValidationRule {
   validate: (value: string) => boolean;
-  errorMessage: string;
+  errorKey: string;
 }
 
 export type ValidationRules = Record<keyof StepFourData, ValidationRule>;

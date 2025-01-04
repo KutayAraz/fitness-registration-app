@@ -4,8 +4,10 @@ import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
 import { StepOneData, StepOneProps } from "./types";
 import { useStepForm } from "@/hooks/use-step-form";
 import { InputWithUnit } from "@/components/ui/input-with-unit/input-with-unit";
+import { useTranslation } from "react-i18next";
 
 export const StepOne = ({ onNext, onBack }: StepOneProps) => {
+  const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState<StepOneData>({
     height: 0,
     weight: 0,
@@ -14,6 +16,12 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
     height: "",
     weight: "",
   });
+
+  // Helper function to determine unit position based on language direction
+  const getUnitPosition = () => {
+    // Arabic and other RTL languages should have units on the left
+    return i18n.dir() === "rtl" ? "left" : "right";
+  };
 
   const validateData = (data: StepOneData): boolean => {
     const heightValid =
@@ -36,18 +44,27 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
   // Validation constants
   const VALIDATION_RULES: Record<
     keyof StepOneData,
-    { min: number; max: number; errorMessage: string }
+    { min: number; max: number; getMessage: (value: number) => string }
   > = {
-    height: { min: 0, max: 300, errorMessage: "Please enter a valid height (0-300 cm)" },
-    weight: { min: 0, max: 500, errorMessage: "Please enter a valid weight (0-500 kg)" },
+    height: {
+      min: 0,
+      max: 300,
+      getMessage: (value: number) =>
+        value === 0 ? t("validation.required") : t("step1.height.error", { min: 0, max: 300 }),
+    },
+    weight: {
+      min: 0,
+      max: 500,
+      getMessage: (value: number) =>
+        value === 0 ? t("validation.required") : t("step1.weight.error", { min: 0, max: 500 }),
+    },
   } as const;
 
   const validateField = (name: keyof StepOneData, value: number): string => {
     const rules = VALIDATION_RULES[name];
-    if (isNaN(value) || value <= rules.min) {
-      return `${String(name).charAt(0).toUpperCase() + String(name).slice(1)} must be greater than ${rules.min}`;
+    if (isNaN(value) || value <= rules.min || value > rules.max) {
+      return rules.getMessage(value);
     }
-    if (value > rules.max) return rules.errorMessage;
     return "";
   };
 
@@ -70,7 +87,7 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
 
   return (
     <StepWrapper
-      title="Let's hear more about you to prepare your personal workout plan!"
+      title={"step1.title"}
       onNext={handleFormSubmit}
       onBack={onBack}
       isFirstStep={true}
@@ -79,32 +96,34 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
     >
       <div className={styles.inputContainer}>
         <InputWithUnit
-          label="Height"
+          label={t("step1.height.label")}
           type="number"
           id="height"
           name="height"
           value={formData.height || ""}
           onChange={handleInputChange}
-          placeholder="Your height"
+          placeholder={t("step1.height.placeholder")}
           error={errors.height}
           min={VALIDATION_RULES.height.min}
           max={VALIDATION_RULES.height.max}
-          unit="cm"
+          unit={t("units.cm")}
+          unitPosition={getUnitPosition()}
           required
         />
 
         <InputWithUnit
-          label="Weight"
+          label={t("step1.weight.label")}
           type="number"
           id="weight"
           name="weight"
           value={formData.weight || ""}
           onChange={handleInputChange}
-          placeholder="Your weight"
+          placeholder={t("step1.weight.placeholder")}
           error={errors.weight}
           min={VALIDATION_RULES.weight.min}
           max={VALIDATION_RULES.weight.max}
-          unit="kg"
+          unit={t("units.kg")}
+          unitPosition={getUnitPosition()}
           required
         />
       </div>
