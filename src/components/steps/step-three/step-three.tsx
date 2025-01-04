@@ -3,6 +3,9 @@ import styles from "./step-three.module.css";
 import { FitnessGoal, StepThreeProps } from "./types";
 import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
 import { RadioOption } from "./components/radio-option";
+import FireIcon from "@/assets/svgs/fire.svg?react";
+import RankIcon from "@/assets/svgs/rank.svg?react";
+import SmileyFaceIcon from "@/assets/svgs/smiley-face.svg?react";
 
 export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
   const [selectedGoal, setSelectedGoal] = useState<FitnessGoal | null>(null);
@@ -11,17 +14,17 @@ export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
     {
       value: "loseWeight",
       label: "Lose weight",
-      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none"></svg>,
+      icon: <FireIcon width={16} height={16} />,
     },
     {
       value: "buildMuscle",
       label: "Build muscle",
-      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none"></svg>,
+      icon: <RankIcon width={16} height={16} />,
     },
     {
       value: "stayHealthy",
       label: "Stay healthy",
-      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none"></svg>,
+      icon: <SmileyFaceIcon width={16} height={16} />,
     },
   ] as const;
 
