@@ -1,0 +1,38 @@
+.navigationButton {
+    background-color: #4140E5;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+}
+
+.navigationButton:hover {
+    background-color: #1717be;
+    border-color: #9747FF;
+}
+
+.navigationButton:focus {
+    border-color: #9747FF;
+    box-shadow: 0 0 0 2px rgba(151, 71, 255, 0.2);
+}
+
+.navigationButton:disabled {
+    background-color: #E0E0E0;
+    border-color: transparent;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* RTL Support */
+.rtl {
+    direction: rtl;
+}
+
+.ltr {
+    direction: ltr;
+}

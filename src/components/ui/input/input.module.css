@@ -1,0 +1,65 @@
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.input {
+    padding: 1rem;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    background-color: #FFFFFF;
+}
+
+.input:hover {
+    border-color: #4140E5;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #4140E5;
+    box-shadow: 0 0 0 3px rgba(65, 64, 229, 0.1);
+}
+
+.inputError {
+    border-color: #FF4D4F;
+}
+
+.inputError:focus {
+    border-color: #FF4D4F;
+    box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.1);
+}
+
+.error {
+    color: #FF4D4F;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.helperText {
+    color: #666;
+    font-size: 0.875rem;
+}
+
+/* Remove number input spinners */
+.input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.input[type="number"]::-webkit-outer-spin-button,
+.input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
