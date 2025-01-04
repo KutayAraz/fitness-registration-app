@@ -1,0 +1,72 @@
+{
+  "language": {
+    "english": "English",
+    "arabic": "العربية"
+  },
+  "units": {
+    "kg": "kg",
+    "cm": "cm"
+  },
+  "buttons": {
+    "next": "Next",
+    "back": "Back",
+    "save": "Save"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email",
+    "password": "Password must be at least 8 characters"
+  },
+  "step1": {
+    "title": "Let's hear more about you to prepare your personal workout plan",
+    "weight": {
+      "label": "Weight",
+      "placeholder": "Enter your weight in kg",
+      "error": "Please enter a valid weight between {{min}} and {{max}} kg"
+    },
+    "height": {
+      "label": "Height",
+      "placeholder": "Enter your height in cm",
+      "error": "Please enter a valid height between {{min}} and {{max}} cm"
+    }
+  },
+  "step2": {
+    "title": "Pick your workout days",
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "step3": {
+    "title": "Fitness Goal",
+    "goals": {
+      "loseWeight": "Lose weight",
+      "buildMuscle": "Build muscle",
+      "stayHealthy": "Stay health"
+    }
+  },
+  "step4": {
+    "title": "Final Step. Complete your registration",
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password"
+    },
+    "name": {
+      "label": "Name",
+      "placeholder": "Enter your name"
+    },
+    "surname": {
+      "label": "Surname",
+      "placeholder": "Enter your surname"
+    }
+  }
+}
