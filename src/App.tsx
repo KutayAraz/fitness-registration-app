@@ -6,10 +6,15 @@ import { StepTwo } from "./components/steps/step-two/step-two";
 import { StepThree } from "./components/steps/step-three/step-three";
 import { StepFour } from "./components/steps/step-four/step-four";
 import { SlideTransition } from "./components/slide-transition/slide-transition";
+import { LanguageSwitcher } from "./components/language-switcher/language-switcher";
+import { useLanguage } from "./hooks/use-language";
+import { LanguageProvider } from "./contexts/language-provider";
+import { DayKey } from "./components/steps/step-two/types";
+import { Steps } from "./types/steps";
 
-function App() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
+function AppContent() {
+  const { direction } = useLanguage();
+  const [currentStep, setCurrentStep] = useState<Steps>(1);
 
   const [registrationData, setRegistrationData] = useState<RegistrationData>({
     step1: null,
@@ -19,7 +24,7 @@ function App() {
   });
 
   const handleBack = () => {
-    setCurrentStep((prev) => Math.max(1, prev - 1));
+    setCurrentStep((prev) => Math.max(1, prev - 1) as Steps);
   };
 
   // Generic function to handle any step's completion
@@ -31,23 +36,21 @@ function App() {
       ...prev,
       [step]: data,
     }));
-    setCurrentStep((prev) => Math.min(4, prev + 1));
-  };
-
-  const handleLanguageChange = (newLanguage: string) => {
-    setDirection(newLanguage === "ar" ? "rtl" : "ltr");
+    setCurrentStep((prev) => Math.min(4, prev + 1) as Steps);
   };
 
   // Helper function to calculate BMI and determine available workout days
-  const getWorkoutDays = (stepOneData: StepOneData | null): string[] => {
-    if (!stepOneData) return ["Monday", "Wednesday", "Saturday", "Sunday"];
+  const getWorkoutDays = (stepOneData: StepOneData | null): DayKey[] => {
+    if (!stepOneData) {
+      return ["monday", "wednesday", "saturday", "sunday"];
+    }
 
     const heightInCentimeters = stepOneData.height;
     const bmiRatio = stepOneData.weight / heightInCentimeters;
 
     return bmiRatio <= 0.5
-      ? ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-      : ["Monday", "Wednesday", "Saturday", "Sunday"];
+      ? ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+      : ["monday", "wednesday", "saturday", "sunday"];
   };
 
   const renderCurrentStep = () => {
@@ -77,10 +80,19 @@ function App() {
 
   return (
     <div className="registration-container">
+      <LanguageSwitcher />
       <SlideTransition direction={direction} currentStep={currentStep}>
         {renderCurrentStep()}
       </SlideTransition>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 
