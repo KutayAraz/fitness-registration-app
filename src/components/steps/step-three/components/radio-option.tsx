@@ -1,15 +1,22 @@
 import styles from "./radio-option.module.css";
 
-interface RadioOptionProps {
-  value: string;
+interface RadioOptionProps<T extends string> {
+  value: T;
   label: string;
   icon: JSX.Element;
   selected: boolean;
-  onChange: (value: string) => void;
+  onChange: (value: T) => void;
   name: string;
 }
 
-export const RadioOption = ({ value, label, icon, selected, onChange, name }: RadioOptionProps) => {
+export const RadioOption = <T extends string>({
+  value,
+  label,
+  icon,
+  selected,
+  onChange,
+  name,
+}: RadioOptionProps<T>) => {
   return (
     <label className={styles.radioOption}>
       <input

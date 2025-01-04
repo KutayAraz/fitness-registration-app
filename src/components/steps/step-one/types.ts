@@ -1,6 +1,5 @@
-export interface StepData {
-  [key: string]: unknown;
-}
+import { StepData } from "@/types/step-data";
+
 export type FieldErrors = Record<keyof StepOneData, string>;
 
 export interface StepOneData extends StepData {

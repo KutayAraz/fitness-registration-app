@@ -3,6 +3,8 @@ import styles from "./step-four.module.css";
 import { StepFourData, StepFourProps } from "./types";
 import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
 import { Input } from "@/components/ui/input/input";
+import { VALIDATION_RULES } from "./validation-rules";
+import { useStepForm } from "@/hooks/use-step-form";
 
 export const StepFour = ({ onNext, onBack }: StepFourProps) => {
   const [formData, setFormData] = useState<StepFourData>({
@@ -14,107 +16,90 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
 
   const [errors, setErrors] = useState<Partial<Record<keyof StepFourData, string>>>({});
 
+  const validateData = (data: StepFourData): boolean => {
+    const newErrors: Partial<Record<keyof StepFourData, string>> = {};
+    let isValid = true;
+
+    // Validate all fields using validation rules
+    (Object.keys(data) as Array<keyof StepFourData>).forEach((field) => {
+      const rule = VALIDATION_RULES[field];
+      if (!rule.validate(data[field] as string)) {
+        newErrors[field] = rule.errorMessage;
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const { isSubmitting, handleSubmit } = useStepForm<StepFourData>({
+    onNext,
+    validateData,
+  });
+
   const validateField = (name: keyof StepFourData, value: string): string => {
-    switch (name) {
-      case "firstName":
-      case "lastName":
-        return value.trim() === "" ? "This field is required" : "";
-      case "email":
-        return !value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-          ? "Please enter a valid email address"
-          : "";
-      case "password":
-        return value.length < 8 ? "Password must be at least 8 characters long" : "";
-      default:
-        return "";
-    }
+    const rule = VALIDATION_RULES[name];
+    return !rule.validate(value) ? rule.errorMessage : "";
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const fieldName = name as keyof StepFourData;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [fieldName]: value,
     }));
 
+    const error = validateField(fieldName, value);
     setErrors((prev) => ({
       ...prev,
-      [name]: validateField(name as keyof StepFourData, value),
+      [fieldName]: error,
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Validate all fields
-    const newErrors = Object.keys(formData).reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: validateField(key as keyof StepFourData, formData[key as keyof StepFourData]),
-      }),
-      {},
-    );
-
-    setErrors(newErrors);
-
-    if (Object.values(newErrors).every((error) => !error)) {
-      onNext(formData);
-    }
+    handleSubmit(formData);
   };
 
   const isValid = () => {
-    return (
-      Object.values(formData).every((value) => value.trim() !== "") &&
-      Object.values(errors).every((error) => !error)
-    );
+    return Object.keys(formData).every((key) => {
+      const field = key as keyof StepFourData;
+      return VALIDATION_RULES[field].validate(formData[field] as string);
+    });
   };
+
+  const inputFields = [
+    { name: "firstName", placeholder: "Name", type: "text" },
+    { name: "lastName", placeholder: "Surname", type: "text" },
+    { name: "email", placeholder: "E-mail", type: "email" },
+    { name: "password", placeholder: "Password", type: "password" },
+  ] as const;
 
   return (
     <StepWrapper
       title="Final step. Complete your registration"
-      onNext={handleSubmit}
+      onNext={handleFormSubmit}
       onBack={onBack}
       isValid={isValid()}
+      isSubmitting={isSubmitting}
       isLastStep
     >
       <div className={styles.formContainer}>
-        <Input
-          name="firstName"
-          placeholder="Name"
-          value={formData.firstName}
-          onChange={handleChange}
-          error={errors.firstName}
-          required
-        />
-
-        <Input
-          name="lastName"
-          placeholder="Surname"
-          value={formData.lastName}
-          onChange={handleChange}
-          error={errors.lastName}
-          required
-        />
-
-        <Input
-          name="email"
-          type="email"
-          placeholder="E-mail"
-          value={formData.email}
-          onChange={handleChange}
-          error={errors.email}
-          required
-        />
-
-        <Input
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          required
-        />
+        {inputFields.map((field) => (
+          <Input
+            key={field.name}
+            name={field.name}
+            type={field.type}
+            placeholder={field.placeholder}
+            value={formData[field.name as keyof StepFourData] as string}
+            onChange={handleChange}
+            error={errors[field.name as keyof StepFourData]}
+            required
+          />
+        ))}
       </div>
     </StepWrapper>
   );

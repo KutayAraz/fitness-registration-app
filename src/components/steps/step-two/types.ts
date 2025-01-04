@@ -1,5 +1,7 @@
-export interface StepTwoData {
-  workoutDays: string[];
+import { StepData } from "@/types/step-data";
+
+export interface StepTwoData extends StepData {
+  selectedDays: string[];
 }
 
 export interface StepTwoProps {

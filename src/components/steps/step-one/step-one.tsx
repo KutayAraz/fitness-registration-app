@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styles from "./step-one.module.css";
 import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
-import { mockApi } from "@/utils/mock-api";
 import { StepOneData, StepOneProps } from "./types";
 import { Input } from "@/components/ui/input/input";
+import { useStepForm } from "@/hooks/use-step-form";
 
 export const StepOne = ({ onNext, onBack }: StepOneProps) => {
   const [formData, setFormData] = useState<StepOneData>({
@@ -15,7 +15,23 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
     weight: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const validateData = (data: StepOneData): boolean => {
+    const heightValid =
+      data.height > VALIDATION_RULES.height.min && data.height <= VALIDATION_RULES.height.max;
+    const weightValid =
+      data.weight > VALIDATION_RULES.weight.min && data.weight <= VALIDATION_RULES.weight.max;
+    return heightValid && weightValid && !errors.height && !errors.weight;
+  };
+
+  const { isSubmitting, handleSubmit } = useStepForm<StepOneData>({
+    onNext,
+    validateData,
+  });
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
 
   // Validation constants
   const VALIDATION_RULES: Record<
@@ -48,21 +64,6 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isValid() || isSubmitting) return;
-
-    setIsSubmitting(true);
-    try {
-      await mockApi.submitStepData(formData);
-      onNext(formData);
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const isValid = () => {
     return formData.height > 0 && formData.weight > 0 && !errors.height && !errors.weight;
   };
@@ -70,7 +71,7 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
   return (
     <StepWrapper
       title="Let's hear more about you to prepare your personal workout plan!"
-      onNext={handleSubmit}
+      onNext={handleFormSubmit}
       onBack={onBack}
       isFirstStep={true}
       isValid={isValid()}

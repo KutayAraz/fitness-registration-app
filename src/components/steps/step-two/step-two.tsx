@@ -1,13 +1,21 @@
 import { useState } from "react";
 import { StepWrapper } from "@/components/step-wrapper/step-wrapper";
-import { StepTwoProps } from "./types";
+import { StepTwoData, StepTwoProps } from "./types";
 import { DaySelect } from "./day-select/day-select";
 import styles from "./step-two.module.css";
+import { useStepForm } from "@/hooks/use-step-form";
 
 export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [formData, setFormData] = useState<StepTwoData>({
+    selectedDays: [],
+  });
 
-  const allDays: string[] = [
+  const { isSubmitting, handleSubmit } = useStepForm<StepTwoData>({
+    onNext,
+    validateData: (data) => data.selectedDays.length > 0,
+  });
+
+  const allDays = [
     "Monday",
     "Tuesday",
     "Wednesday",
@@ -15,38 +23,34 @@ export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
     "Friday",
     "Saturday",
     "Sunday",
-  ];
+  ] as const;
 
   const handleDayToggle = (day: string) => {
-    setSelectedDays((prev) => {
-      if (prev.includes(day)) {
-        return prev.filter((d) => d !== day);
-      } else {
-        return [...prev, day];
-      }
-    });
+    setFormData((prev) => ({
+      selectedDays: prev.selectedDays.includes(day)
+        ? prev.selectedDays.filter((d) => d !== day)
+        : [...prev.selectedDays, day],
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onNext({ workoutDays: selectedDays });
+    handleSubmit(formData);
   };
-
-  const isValid = () => selectedDays.length > 0;
-
   return (
     <StepWrapper
       title="Pick your workout days"
-      onNext={handleSubmit}
+      onNext={handleFormSubmit}
       onBack={onBack}
-      isValid={isValid()}
+      isValid={formData.selectedDays.length > 0}
+      isSubmitting={isSubmitting}
     >
       <div className={styles.selectContainer}>
         {allDays.map((day) => (
           <DaySelect
             key={day}
             day={day}
-            selected={selectedDays.includes(day)}
+            selected={formData.selectedDays.includes(day)}
             onClick={() => handleDayToggle(day)}
             disabled={!availableDays.includes(day)}
           />
