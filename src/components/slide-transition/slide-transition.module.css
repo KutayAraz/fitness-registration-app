@@ -1,0 +1,61 @@
+.slideContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+@keyframes slideLTRForward {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideLTRBackward {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideRTLForward {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideRTLBackward {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.slideLTRForward {
+    animation: slideLTRForward 0.3s ease-in-out;
+}
+
+.slideLTRBackward {
+    animation: slideLTRBackward 0.3s ease-in-out;
+}
+
+.slideRTLForward {
+    animation: slideRTLForward 0.3s ease-in-out;
+}
+
+.slideRTLBackward {
+    animation: slideRTLBackward 0.3s ease-in-out;
+}

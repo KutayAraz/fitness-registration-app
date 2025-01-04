@@ -1,8 +1,9 @@
-export type StepData = {
-  [key: string]: unknown;
-};
+import { StepData } from "@/types/step-data";
 
-// Type for API response
+export interface ArrayStepData extends StepData {
+  values: unknown[];
+}
+
 export type ApiResponse<T> = {
   success: boolean;
   data?: T;
@@ -10,8 +11,7 @@ export type ApiResponse<T> = {
 };
 
 export const mockApi = {
-  async submitStepData<T extends StepData>(data: T): Promise<ApiResponse<T>> {
-    // Simulate network delay of 500ms
+  async submitStepData(data: StepData | ArrayStepData): Promise<ApiResponse<StepData>> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
