@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input/input";
 import { VALIDATION_RULES } from "./validation-rules";
 import { useStepForm } from "@/hooks/use-step-form";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Final step of registration form that collects user's personal and account information.
@@ -13,6 +14,9 @@ import { useTranslation } from "react-i18next";
  */
 export const StepFour = ({ onNext, onBack }: StepFourProps) => {
   const { t } = useTranslation();
+
+  // Get the navigate function from React Router
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<StepFourData>({
     firstName: "",
     lastName: "",
@@ -70,6 +74,7 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSubmit(formData);
+    navigate("/dashboard");
   };
 
   const isValid = () => {
@@ -120,7 +125,6 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
       onBack={onBack}
       isValid={isValid()}
       isSubmitting={isSubmitting}
-      isLastStep
     >
       <div className={styles.formContainer}>
         {inputGroups.map((group) => (

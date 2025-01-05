@@ -11,6 +11,7 @@ import { useLanguage } from "@/hooks/use-language";
 import { RegistrationData } from "@/types/registration-data";
 import { Steps } from "@/types/steps";
 import { useState } from "react";
+import styles from "./registration-page.module.css";
 
 /**
  * Main registration flow container managing multi-step form state and navigation.
@@ -87,7 +88,7 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <div className="registration-container">
+    <div className={styles.registrationPage}>
       <ProgressBar currentStep={currentStep} />
       <LanguageSwitcher />
       <SlideTransition direction={direction} currentStep={currentStep}>

@@ -25,7 +25,6 @@ export const StepWrapper = ({
   onNext,
   onBack,
   isFirstStep = false,
-  isLastStep = false,
   isValid,
   isSubmitting = false,
 }: StepWrapperProps) => {
@@ -47,7 +46,7 @@ export const StepWrapper = ({
           text={isSubmitting ? t("buttons.save") : t("buttons.next")}
           type="submit"
           ariaLabel={isSubmitting ? t("buttons.save") : t("buttons.next")}
-          disabled={!isValid || isLastStep || isSubmitting}
+          disabled={!isValid || isSubmitting}
         />
       </div>
     </form>
