@@ -11,6 +11,7 @@ import { useLanguage } from "./hooks/use-language";
 import { LanguageProvider } from "./contexts/language-provider";
 import { DayKey } from "./components/steps/step-two/types";
 import { Steps } from "./types/steps";
+import { ProgressBar } from "./components/progress-bar/progress-bar";
 
 function AppContent() {
   const { direction } = useLanguage();
@@ -81,6 +82,7 @@ function AppContent() {
   return (
     <div className="registration-container">
       <LanguageSwitcher />
+      <ProgressBar currentStep={currentStep} />
       <SlideTransition direction={direction} currentStep={currentStep}>
         {renderCurrentStep()}
       </SlideTransition>
