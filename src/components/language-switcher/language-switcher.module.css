@@ -1,7 +1,4 @@
 .switcherContainer {
-    position: fixed;
-    top: 20px;
-    right: 20px;
     display: flex;
     gap: 8px;
     padding: 4px;
@@ -12,8 +9,6 @@
 }
 
 .languageButton {
-    min-width: 40px;
-    min-height: 42px;
     padding: 8px 16px;
     border: none;
     border-radius: 6px;
