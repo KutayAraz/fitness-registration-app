@@ -14,7 +14,7 @@
   "buttons": {
     "next": "Next",
     "back": "Back",
-    "save": "Save"
+    "save": "Saving..."
   },
   "validation": {
     "required": "This field is required",
