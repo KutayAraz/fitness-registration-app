@@ -3,6 +3,10 @@
     "english": "English",
     "arabic": "العربية"
   },
+  "pages": {
+    "dashboard": "لوحة التحكم",
+    "register": "تسجيل جديد"
+  },
   "units": {
     "kg": "كجم",
     "cm": "سم"

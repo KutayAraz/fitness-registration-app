@@ -1,4 +1,4 @@
-import { Dashboard } from "@/pages/dashboard/dashboard";
+import { Dashboard } from "@/pages/dashboard";
 import { RegistrationPage } from "@/pages/registration-page";
 import { createBrowserRouter } from "react-router-dom";
 

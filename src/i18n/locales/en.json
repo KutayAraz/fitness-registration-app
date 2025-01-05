@@ -3,6 +3,10 @@
     "english": "English",
     "arabic": "العربية"
   },
+  "pages": {
+    "dashboard": "Dashboard",
+    "register": "Register"
+  },
   "units": {
     "kg": "kg",
     "cm": "cm"

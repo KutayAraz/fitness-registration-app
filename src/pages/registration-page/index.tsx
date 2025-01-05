@@ -11,7 +11,8 @@ import { useLanguage } from "@/hooks/use-language";
 import { RegistrationData } from "@/types/registration-data";
 import { Steps } from "@/types/steps";
 import { useState } from "react";
-import styles from "./registration-page.module.css";
+import styles from "./index.module.css";
+import { useTranslation } from "react-i18next";
 
 /**
  * Main registration flow container managing multi-step form state and navigation.
@@ -22,6 +23,7 @@ import styles from "./registration-page.module.css";
  * - RTL/LTR support
  */
 export const RegistrationPage = () => {
+  const { t } = useTranslation();
   const { direction } = useLanguage();
   const [currentStep, setCurrentStep] = useState<Steps>(1);
 
@@ -88,12 +90,15 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <div className={styles.registrationPage}>
-      <ProgressBar currentStep={currentStep} />
-      <LanguageSwitcher />
-      <SlideTransition direction={direction} currentStep={currentStep}>
-        {renderCurrentStep()}
-      </SlideTransition>
-    </div>
+    <>
+      <title>{t("pages.register")}</title>
+      <div className={styles.registrationContainer}>
+        <ProgressBar currentStep={currentStep} />
+        <LanguageSwitcher />
+        <SlideTransition direction={direction} currentStep={currentStep}>
+          {renderCurrentStep()}
+        </SlideTransition>
+      </div>
+    </>
   );
 };
