@@ -1,20 +1,23 @@
-import { StepOneData } from "./types";
+import { ValidationRules } from "./types";
 
-// Validation constants
-export const VALIDATION_RULES: Record<
-  keyof StepOneData,
-  { min: number; max: number; getMessage: (value: number) => string }
-> = {
+export const VALIDATION_RANGES = {
+  height: { min: 0, max: 300 },
+  weight: { min: 0, max: 500 },
+} as const;
+
+export const VALIDATION_RULES: ValidationRules = {
   height: {
-    min: 0,
-    max: 300,
-    getMessage: (value: number) =>
-      value === 0 ? t("validation.required") : t("step1.height.error", { min: 0, max: 300 }),
+    validate: (value: number) => {
+      if (value === 0) return false;
+      return value > VALIDATION_RANGES.height.min && value <= VALIDATION_RANGES.height.max;
+    },
+    errorKey: (value: number) => (value === 0 ? "validation.required" : "step1.height.error"),
   },
   weight: {
-    min: 0,
-    max: 500,
-    getMessage: (value: number) =>
-      value === 0 ? t("validation.required") : t("step1.weight.error", { min: 0, max: 500 }),
+    validate: (value: number) => {
+      if (value === 0) return false;
+      return value > VALIDATION_RANGES.weight.min && value <= VALIDATION_RANGES.weight.max;
+    },
+    errorKey: (value: number) => (value === 0 ? "validation.required" : "step1.weight.error"),
   },
-} as const;
+};

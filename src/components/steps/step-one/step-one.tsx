@@ -5,7 +5,12 @@ import { StepOneData, StepOneProps } from "./types";
 import { useStepForm } from "@/hooks/use-step-form";
 import { InputWithUnit } from "@/components/ui/input-with-unit/input-with-unit";
 import { useTranslation } from "react-i18next";
+import { VALIDATION_RANGES, VALIDATION_RULES } from "./validation-rules";
 
+/**
+ * First step of registration form that collects user's physical measurements.
+ * Handles height (cm) and weight (kg) inputs with RTL/LTR support and validation.
+ */
 export const StepOne = ({ onNext, onBack }: StepOneProps) => {
   const { t, i18n } = useTranslation();
   const [formData, setFormData] = useState<StepOneData>({
@@ -22,13 +27,11 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
     // Arabic and other RTL languages should have units on the left
     return i18n.dir() === "rtl" ? "left" : "right";
   };
-
   const validateData = (data: StepOneData): boolean => {
-    const heightValid =
-      data.height > VALIDATION_RULES.height.min && data.height <= VALIDATION_RULES.height.max;
-    const weightValid =
-      data.weight > VALIDATION_RULES.weight.min && data.weight <= VALIDATION_RULES.weight.max;
-    return heightValid && weightValid && !errors.height && !errors.weight;
+    return Object.keys(data).every((key) => {
+      const field = key as keyof StepOneData;
+      return VALIDATION_RULES[field].validate(data[field] as number);
+    });
   };
 
   const { isSubmitting, handleSubmit } = useStepForm<StepOneData>({
@@ -41,31 +44,10 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
     handleSubmit(formData);
   };
 
-  // Validation constants
-  const VALIDATION_RULES: Record<
-    keyof StepOneData,
-    { min: number; max: number; getMessage: (value: number) => string }
-  > = {
-    height: {
-      min: 0,
-      max: 300,
-      getMessage: (value: number) =>
-        value === 0 ? t("validation.required") : t("step1.height.error", { min: 0, max: 300 }),
-    },
-    weight: {
-      min: 0,
-      max: 500,
-      getMessage: (value: number) =>
-        value === 0 ? t("validation.required") : t("step1.weight.error", { min: 0, max: 500 }),
-    },
-  } as const;
-
+  // Validate individual field as user types
   const validateField = (name: keyof StepOneData, value: number): string => {
-    const rules = VALIDATION_RULES[name];
-    if (isNaN(value) || value <= rules.min || value > rules.max) {
-      return rules.getMessage(value);
-    }
-    return "";
+    const rule = VALIDATION_RULES[name];
+    return !rule.validate(value) ? rule.errorKey(value) : "";
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,8 +86,8 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
           onChange={handleInputChange}
           placeholder={t("step1.height.placeholder")}
           error={errors.height}
-          min={VALIDATION_RULES.height.min}
-          max={VALIDATION_RULES.height.max}
+          min={VALIDATION_RANGES.height.min}
+          max={VALIDATION_RANGES.height.max}
           unit={t("units.cm")}
           unitPosition={getUnitPosition()}
           required
@@ -120,8 +102,8 @@ export const StepOne = ({ onNext, onBack }: StepOneProps) => {
           onChange={handleInputChange}
           placeholder={t("step1.weight.placeholder")}
           error={errors.weight}
-          min={VALIDATION_RULES.weight.min}
-          max={VALIDATION_RULES.weight.max}
+          min={VALIDATION_RANGES.weight.min}
+          max={VALIDATION_RANGES.weight.max}
           unit={t("units.kg")}
           unitPosition={getUnitPosition()}
           required

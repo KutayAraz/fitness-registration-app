@@ -11,3 +11,10 @@ export interface StepOneProps {
   onNext: (data: StepOneData) => void;
   onBack: () => void;
 }
+
+export interface ValidationRule {
+  validate: (value: number) => boolean;
+  errorKey: (value: number) => string;
+}
+
+export type ValidationRules = Record<keyof StepOneData, ValidationRule>;
