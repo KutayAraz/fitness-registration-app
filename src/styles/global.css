@@ -1,9 +1,16 @@
 html,
-body,
-#root {
-    height: 100%;
+body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #E8E8FF;
 }
 
 :root {
@@ -12,11 +19,9 @@ body,
 }
 
 body {
-    height: 100vh;
     font-family: 'Inter', sans-serif;
     background-color: #E8E8FF;
     font-family: var(--font-primary);
-    padding: 6px;
-    max-width: 600px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
 }

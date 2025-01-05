@@ -61,7 +61,7 @@ export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
       isSubmitting={isSubmitting}
     >
       <div className={styles.goalsContainer} role="radiogroup" aria-label={t("step3.ariaLabel")}>
-        {fitnessGoals.map((goal) => (
+        {fitnessGoals.map((goal, index) => (
           <RadioOption
             key={goal.value}
             value={goal.value}
@@ -70,6 +70,7 @@ export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
             selected={formData.fitnessGoal === goal.value}
             onChange={handleGoalChange}
             name="fitnessGoal"
+            data-is-last={index === fitnessGoals.length - 1}
           />
         ))}
       </div>

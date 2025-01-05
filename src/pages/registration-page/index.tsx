@@ -90,15 +90,15 @@ export const RegistrationPage = () => {
   };
 
   return (
-    <>
+    <div className={styles.registrationWrapper}>
       <title>{t("pages.register")}</title>
+      <ProgressBar currentStep={currentStep} />
+      <LanguageSwitcher />
       <div className={styles.registrationContainer}>
-        <ProgressBar currentStep={currentStep} />
-        <LanguageSwitcher />
         <SlideTransition direction={direction} currentStep={currentStep}>
           {renderCurrentStep()}
         </SlideTransition>
       </div>
-    </>
+    </div>
   );
 };

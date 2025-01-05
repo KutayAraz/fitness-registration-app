@@ -31,16 +31,18 @@ export const LanguageSwitcher = () => {
   const { t } = useTranslation();
 
   return (
-    <div className={styles.switcherContainer} role="group" aria-label="Language switcher">
-      {SUPPORTED_LANGUAGES.map((lang) => (
-        <LanguageButton
-          key={lang}
-          languageCode={lang}
-          isActive={language === lang}
-          onClick={setLanguage}
-          label={t(`language.${lang === "en" ? "english" : "arabic"}`)}
-        />
-      ))}
+    <div className={`${styles.switcherWrapper}`}>
+      <div className={styles.switcherContainer} role="group" aria-label="Language switcher">
+        {SUPPORTED_LANGUAGES.map((lang) => (
+          <LanguageButton
+            key={lang}
+            languageCode={lang}
+            isActive={language === lang}
+            onClick={setLanguage}
+            label={t(`language.${lang === "en" ? "english" : "arabic"}`)}
+          />
+        ))}
+      </div>
     </div>
   );
 };

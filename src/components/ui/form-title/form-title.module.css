@@ -4,3 +4,9 @@
     text-align: center;
     font-size: 1.5em;
 }
+
+@media (max-height: 768px) {
+    .formTitle {
+        margin: 4px 0;
+    }
+}

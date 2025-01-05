@@ -1,20 +1,42 @@
 .radioOption {
     width: 100%;
-    cursor: pointer;
-}
-
-.radioContent {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #E0E0E0;
-    margin: 0 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: left;
+    position: relative;
+}
+
+.radioOption::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    height: 1px;
+    background-color: #1717be;
+    opacity: 0.5;
+}
+
+.radioOption:last-child::after {
+    display: none;
+}
+
+.radioContent {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
     transition: all 0.2s ease;
 }
 
-.radioContent:last-child {
-    border-bottom: none;
+.radioContent:hover {
+    background-color: #F5F5F5;
 }
 
 .iconLabel {
