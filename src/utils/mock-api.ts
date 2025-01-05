@@ -10,6 +10,9 @@ export type ApiResponse<T> = {
   error?: string;
 };
 
+/**
+ * Mock API for submitting step data.
+ */
 export const mockApi = {
   async submitStepData(data: StepData | ArrayStepData): Promise<ApiResponse<StepData>> {
     return new Promise((resolve) => {

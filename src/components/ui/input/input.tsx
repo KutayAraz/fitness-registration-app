@@ -9,6 +9,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, helperText, className, ...props }, ref) => {
+    // Use provided id or name for input identification and label association
     const inputId = props.id || props.name;
 
     return (
@@ -27,17 +28,18 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : undefined}
         />
-
+        {/* Error message with ARIA integration */}
         {error && (
           <span id={`${inputId}-error`} className={styles.error} role="alert">
             {error}
           </span>
         )}
-
+        {/* Helper text only shows when no error present */}
         {helperText && !error && <span className={styles.helperText}>{helperText}</span>}
       </div>
     );
   },
 );
 
+// Component display name for React DevTools
 Input.displayName = "Input";

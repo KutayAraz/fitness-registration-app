@@ -6,6 +6,7 @@ interface ProgressBarProps {
   totalSteps?: number;
 }
 
+// Visual progress indicator for multi-step forms.
 export const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps = 4 }) => {
   // Calculate progress percentage
   const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;

@@ -1,4 +1,5 @@
 import styles from "./day-select.module.css";
+import CheckmarkIcon from "@/assets/svgs/checkmark.svg?react";
 
 interface DaySelectProps {
   day: string;
@@ -18,24 +19,7 @@ export const DaySelect = ({ day, selected, onClick, disabled = false }: DaySelec
       role="checkbox"
     >
       <span className={`${styles.dayText} ${disabled ? styles.disabledText : ""}`}>{day}</span>
-      {selected && (
-        <svg
-          className={styles.checkmark}
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M13.3334 4L6.00008 11.3333L2.66675 8"
-            stroke="#4140E5"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )}
+      {selected && <CheckmarkIcon width={16} height={16} className={styles.checkmark} />}
     </button>
   );
 };

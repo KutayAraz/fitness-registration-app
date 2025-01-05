@@ -3,6 +3,10 @@ import { Language, LanguageProviderProps } from "./types";
 import { LanguageContext } from "./language-context";
 import i18next from "i18next";
 
+/**
+ * Provider component that wraps the application and provides the language context.
+ * Manages the current language state and updates the document language and direction.
+ */
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem("language");

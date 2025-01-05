@@ -12,6 +12,7 @@ export const SlideTransition = ({ children, direction, currentStep }: SlideTrans
   const [transitioning, setTransitioning] = useState(false);
   const [slideDirection, setSlideDirection] = useState<"forward" | "backward">("forward");
 
+  // Handle step changes and trigger animations
   useEffect(() => {
     if (currentStep !== prevStep) {
       setTransitioning(true);
@@ -20,6 +21,7 @@ export const SlideTransition = ({ children, direction, currentStep }: SlideTrans
     }
   }, [currentStep, prevStep]);
 
+  // Determine the appropriate slide animation class based on direction and LTR/RTL
   const getSlideClass = () => {
     if (!transitioning) return "";
 

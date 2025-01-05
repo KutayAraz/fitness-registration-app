@@ -6,6 +6,10 @@ import styles from "./step-two.module.css";
 import { useStepForm } from "@/hooks/use-step-form";
 import { useTranslation } from "react-i18next";
 
+/**
+ * Second step of registration form that handles workout day selection.
+ * Available days are determined by user's BMI calculated in step one.
+ */
 export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
   const { t } = useTranslation();
 
@@ -13,6 +17,7 @@ export const StepTwo = ({ onNext, onBack, availableDays }: StepTwoProps) => {
     selectedDays: [],
   });
 
+  // Simple validation: at least one day must be selected
   const { isSubmitting, handleSubmit } = useStepForm<StepTwoData>({
     onNext,
     validateData: (data) => data.selectedDays.length > 0,

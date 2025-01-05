@@ -7,6 +7,10 @@ import { VALIDATION_RULES } from "./validation-rules";
 import { useStepForm } from "@/hooks/use-step-form";
 import { useTranslation } from "react-i18next";
 
+/**
+ * Final step of registration form that collects user's personal and account information.
+ * Handles form validation and submission with custom validation rules.
+ */
 export const StepFour = ({ onNext, onBack }: StepFourProps) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<StepFourData>({
@@ -16,6 +20,7 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
     password: "",
   });
 
+  // Track validation errors for each field
   const [errors, setErrors] = useState<Partial<Record<keyof StepFourData, string>>>({});
 
   const validateData = (data: StepFourData): boolean => {
@@ -45,6 +50,7 @@ export const StepFour = ({ onNext, onBack }: StepFourProps) => {
     return !rule.validate(value) ? rule.errorKey : "";
   };
 
+  // Handles input changes and performs real-time validation
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const fieldName = name as keyof StepFourData;

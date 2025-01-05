@@ -9,6 +9,9 @@ type NavigationButtonProps = {
   type?: "button" | "submit" | "reset";
 };
 
+/**
+ * Navigation button component to be used in multi-step forms.
+ */
 export const NavigationButton = ({
   text,
   onClick,

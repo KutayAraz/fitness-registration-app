@@ -1,5 +1,7 @@
 import { createContext } from "react";
 import { LanguageContextType } from "./types";
 
-// Export the context as a constant
+/**
+ * Context for managing the current language of the application.
+ */
 export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

@@ -10,6 +10,10 @@ interface InputWithUnitProps extends React.InputHTMLAttributes<HTMLInputElement>
   unitPosition?: "right" | "left";
 }
 
+/**
+ * Input component with a unit displayed on the right or left side.
+ * Extends the base Input component.
+ */
 export const InputWithUnit = React.forwardRef<HTMLInputElement, InputWithUnitProps>(
   ({ label, error, helperText, unit, unitPosition = "right", className, ...props }, ref) => {
     return (

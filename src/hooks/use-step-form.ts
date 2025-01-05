@@ -1,4 +1,3 @@
-// hooks/useStepForm.ts
 import { useState } from "react";
 import { mockApi } from "@/utils/mock-api";
 import { StepData } from "@/types/step-data";
@@ -11,6 +10,10 @@ interface UseStepFormProps<T extends FormDataType> {
   validateData: (data: T) => boolean;
 }
 
+/**
+ * Hook for managing form submission for multi-step forms.
+ * Handles form submission and data validation.
+ */
 export function useStepForm<T extends FormDataType>({ onNext, validateData }: UseStepFormProps<T>) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 

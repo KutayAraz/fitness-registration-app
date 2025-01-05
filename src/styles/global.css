@@ -12,18 +12,11 @@ body,
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    height: 100vh;
     font-family: 'Inter', sans-serif;
     background-color: #E8E8FF;
     font-family: var(--font-primary);
-}
-
-.registration-container {
-    height: 100%;
+    padding: 6px;
     max-width: 600px;
-    width: 100%;
+    margin: 0 auto;
 }

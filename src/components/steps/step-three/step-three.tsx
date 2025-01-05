@@ -9,6 +9,10 @@ import SmileyFaceIcon from "@/assets/svgs/smiley-face.svg?react";
 import { useStepForm } from "@/hooks/use-step-form";
 import { useTranslation } from "react-i18next";
 
+/**
+ * Third step of registration form for fitness goal selection.
+ * Presents three options as radio buttons with icons: lose weight, build muscle, or stay healthy.
+ */
 export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<StepThreeData>({
@@ -20,6 +24,7 @@ export const StepThree = ({ onNext, onBack }: StepThreeProps) => {
     validateData: (data) => !!data.fitnessGoal,
   });
 
+  // Define available fitness goals with their respective icons and translation keys
   const fitnessGoals = [
     {
       value: "loseWeight" as const,

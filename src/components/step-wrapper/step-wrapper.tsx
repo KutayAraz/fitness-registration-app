@@ -15,6 +15,10 @@ interface StepWrapperProps {
   isSubmitting?: boolean;
 }
 
+/**
+ * Wrapper component for multi-step forms.
+ * Displays the step title, form content, and navigation buttons.
+ */
 export const StepWrapper = ({
   title,
   children,
